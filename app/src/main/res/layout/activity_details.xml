@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/fullNameView"
+        style="@style/GHSample.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:text="Owner Name"/>
+
+    <TextView
+        android:id="@+id/ownerView"
+        style="@style/GHSample.Description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fullNameView"
+        app:layout_constraintTop_toBottomOf="@+id/fullNameView"
+        tools:text="Description of repository"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/watchersIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fa_eye"
+        app:layout_constraintEnd_toStartOf="@+id/watchersView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionView"/>
+
+    <TextView
+        android:id="@+id/watchersView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/watchersIcon"
+        app:layout_constraintEnd_toStartOf="@+id/stargazersIcon"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/watchersIcon"
+        app:layout_constraintTop_toTopOf="@+id/watchersIcon"
+        tools:text="230"/>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/stargazersIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/fa_star"
+        app:layout_constraintBottom_toBottomOf="@+id/watchersView"
+        app:layout_constraintEnd_toStartOf="@+id/stargazersView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/watchersView"
+        app:layout_constraintTop_toTopOf="@+id/watchersView"/>
+
+    <TextView
+        android:id="@+id/stargazersView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="230"
+        app:layout_constraintBottom_toBottomOf="@+id/stargazersIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/stargazersIcon"
+        app:layout_constraintTop_toTopOf="@+id/stargazersIcon"/>
+
+    <TextView
+        android:id="@+id/descriptionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@+id/avatar"
+        style="@style/GHSample.Description"
+        tools:text="Repository description"/>
+
+    <TextView
+        android:id="@+id/lastUpdatedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/last_push"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/watchersIcon"/>
+
+    <TextView
+        android:id="@+id/lastUpdatedView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lastUpdatedLabel"
+        app:layout_constraintStart_toEndOf="@+id/lastUpdatedLabel"
+        app:layout_constraintTop_toTopOf="@+id/lastUpdatedLabel"
+        tools:text="2018/04/04"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/licenseContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="@dimen/padding_default"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastUpdatedLabel">
+
+        <TextView
+            android:id="@+id/licenseLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/license"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/GHSample.Title"/>
+
+        <TextView
+            android:id="@+id/licenseNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/licenseLabel"
+            app:layout_constraintTop_toTopOf="@+id/licenseLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/licenseLabel"
+            tools:text="MIT"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/organizationContainer"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/licenseContainer">
+
+        <TextView
+            android:id="@+id/organizationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/organization"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/GHSample.Title"/>
+
+        <ImageView
+            android:id="@+id/organizationAvatarView"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/organizationLabel"
+            app:srcCompat="@drawable/placeholder"/>
+
+        <TextView
+            android:id="@+id/organizationNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/organizationAvatarView"
+            app:layout_constraintTop_toTopOf="@+id/organizationAvatarView"
+            tools:text="GitHub"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/licenseContainer"/>
+</android.support.constraint.ConstraintLayout>

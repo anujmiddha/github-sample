@@ -1,6 +1,7 @@
 package com.moldedbits.githubsample.view.list
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -8,14 +9,16 @@ import android.view.View
 import com.jakewharton.rxbinding2.support.v7.widget.RecyclerViewScrollEvent
 import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView
 import com.moldedbits.githubsample.R
+import com.moldedbits.githubsample.model.Repository
 import com.moldedbits.githubsample.view.ErrorState
 import com.moldedbits.githubsample.view.LoadingState
 import com.moldedbits.githubsample.view.State
+import com.moldedbits.githubsample.view.detail.RepositoryDetailActivity
 import kotlinx.android.synthetic.main.activity_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class ListActivity : AppCompatActivity() {
+class ListActivity : AppCompatActivity(), RepositoriesAdapter.RepositoryListener {
 
     private val viewModel: ListViewModel by viewModel()
 
@@ -26,7 +29,7 @@ class ListActivity : AppCompatActivity() {
         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
-    private val adapter: RepositoriesAdapter by lazy { RepositoriesAdapter() }
+    private val adapter: RepositoriesAdapter by lazy { RepositoriesAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,5 +123,11 @@ class ListActivity : AppCompatActivity() {
                 recyclerView.post { adapter.hideLoading() }
             }
         }
+    }
+
+    override fun onRepositoryClicked(repository: Repository) {
+        val intent = Intent(this, RepositoryDetailActivity::class.java)
+        intent.putExtra(RepositoryDetailActivity.KEY_REPO, repository)
+        startActivity(intent)
     }
 }

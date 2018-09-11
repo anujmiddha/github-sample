@@ -3,4 +3,7 @@
     <string name="error_message">Could not fetch repositories</string>
     <string name="fa_eye">{fa-eye}</string>
     <string name="fa_star">{fa-star}</string>
+    <string name="last_push">Last Push:</string>
+    <string name="organization">Organization</string>
+    <string name="license">License</string>
 </resources>

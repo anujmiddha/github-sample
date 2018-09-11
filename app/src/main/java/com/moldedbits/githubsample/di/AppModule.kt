@@ -3,6 +3,7 @@ package com.moldedbits.githubsample.di
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.moldedbits.githubsample.api.GitHubService
+import com.moldedbits.githubsample.view.detail.DetailViewModel
 import com.moldedbits.githubsample.view.list.ListViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,6 +22,7 @@ val appModule = module {
 
         val gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'hh:mm:ssZ")
                 .create()
 
         val retrofit = Retrofit.Builder()
@@ -34,4 +36,6 @@ val appModule = module {
     }
 
     viewModel { ListViewModel(get()) }
+
+    viewModel { DetailViewModel(get()) }
 }

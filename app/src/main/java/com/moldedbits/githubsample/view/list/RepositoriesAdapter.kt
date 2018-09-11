@@ -8,7 +8,12 @@ import android.widget.TextView
 import com.moldedbits.githubsample.R
 import com.moldedbits.githubsample.model.Repository
 
-class RepositoriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class RepositoriesAdapter(val listener: RepositoryListener) :
+        RecyclerView.Adapter<BaseViewHolder>() {
+
+    interface RepositoryListener {
+        fun onRepositoryClicked(repository: Repository)
+    }
 
     private val items: MutableList<Repository> = mutableListOf()
 
@@ -37,7 +42,7 @@ class RepositoriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             VIEW_TYPE_REPO -> {
                 val view = LayoutInflater.from(parent.context)
                         .inflate(R.layout.list_item_repository, parent, false)
-                RepositoryViewHolder(view)
+                RepositoryViewHolder(view, clickListener)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context)
@@ -66,6 +71,11 @@ class RepositoriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         }
     }
 
+    private val clickListener: View.OnClickListener = View.OnClickListener {
+        val repo: Repository = it.getTag(R.id.key_repository) as Repository
+        listener.onRepositoryClicked(repo)
+    }
+
     companion object {
         private const val VIEW_TYPE_REPO = 0
         private const val VIEW_TYPE_LOADING = 1
@@ -74,18 +84,25 @@ class RepositoriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-class RepositoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
+class RepositoryViewHolder(itemView: View, clickListener: View.OnClickListener) :
+        BaseViewHolder(itemView) {
 
     private val nameView: TextView = itemView.findViewById(R.id.nameView)
-    private val descriptionView: TextView = itemView.findViewById(R.id.descriptionView)
+    private val descriptionView: TextView = itemView.findViewById(R.id.ownerView)
     private val watchersView: TextView = itemView.findViewById(R.id.watchersView)
     private val stargazersView: TextView = itemView.findViewById(R.id.stargazersView)
+
+    init {
+        itemView.setOnClickListener(clickListener)
+    }
 
     fun bind(repository: Repository) {
         nameView.text = repository.name
         descriptionView.text = repository.description
         watchersView.text = repository.watchersCount.toString()
         stargazersView.text = repository.stargazersCount.toString()
+
+        itemView.setTag(R.id.key_repository, repository)
     }
 }
 
