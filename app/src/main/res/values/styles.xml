@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GHSample">
+    </style>
+
+    <style name="GHSample.Title">
+        <item name="android:textSize">@dimen/textTitle</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
 </resources>

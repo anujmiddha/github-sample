@@ -3,6 +3,7 @@ package com.moldedbits.githubsample.view.list
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.moldedbits.githubsample.R
 import com.moldedbits.githubsample.view.ErrorState
@@ -16,9 +17,13 @@ class ListActivity : AppCompatActivity() {
 
     private val viewModel: ListViewModel by viewModel()
 
+    private val adapter: RepositoriesAdapter by lazy { RepositoriesAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
+
+        initViews()
 
         viewModel.states.observe(this, Observer<State> {
             when (it) {
@@ -33,6 +38,8 @@ class ListActivity : AppCompatActivity() {
                     recyclerView.visibility = View.VISIBLE
 
                     Timber.d("Found ${it.repositoriesResponse.items.size} repositories")
+                    adapter.addAll(it.repositoriesResponse.items)
+                    adapter.notifyDataSetChanged()
                 }
                 is ErrorState -> {
                     emptyView.visibility = View.VISIBLE
@@ -46,5 +53,12 @@ class ListActivity : AppCompatActivity() {
         })
 
         viewModel.fetchRepos()
+    }
+
+    private fun initViews() {
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
+                false)
+
+        recyclerView.adapter = adapter
     }
 }
