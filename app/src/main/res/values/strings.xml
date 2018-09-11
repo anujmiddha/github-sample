@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubSample</string>
+    <string name="error_message">Could not fetch repositories</string>
 </resources>
