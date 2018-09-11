@@ -2,7 +2,6 @@ package com.moldedbits.githubsample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.moldedbits.githubsample.api.GitHubService
@@ -14,6 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 
 class ListActivity : AppCompatActivity() {
@@ -43,11 +43,11 @@ class ListActivity : AppCompatActivity() {
         val service = retrofit.create<GitHubService>(GitHubService::class.java)
         service.trendingRepos("android").enqueue(object : Callback<RepositoriesResponse> {
             override fun onFailure(call: Call<RepositoriesResponse>, t: Throwable) {
-                Log.e("ListActivity", "Failure", t)
+                Timber.e(t, "Failure")
             }
 
             override fun onResponse(call: Call<RepositoriesResponse>, response: Response<RepositoriesResponse>) {
-                Log.d("ListActivity", "Success! Found " + response.body()?.totalCount + " repos")
+                Timber.d("Success! Found %s repos", response.body()?.totalCount)
             }
 
         })
