@@ -17,7 +17,7 @@ interface GitHubService {
      * @param perPage   Number of repositories to be fetched (for pagination). Default is 30
      */
     @GET("/search/repositories?sort=stars&order=desc")
-    fun trendingRepos(@Query("q") query: String = "android",
+    fun trendingRepos(@Query("q") query: String = "topic:android",
                       @Query("page") page: Int = 1,
                       @Query("per_page") perPage: Int = 30):
             Single<RepositoriesResponse>
