@@ -17,10 +17,18 @@ class ListViewModel(private val gitHubService: GitHubService) : RxViewModel() {
     val states: LiveData<State>
         get() = mStates
 
-    fun fetchRepos() {
+    /**
+     * Fetch the trending repositories
+     *
+     * @param currentCount Count of currently loaded repos
+     */
+    fun fetchRepos(currentCount: Int = 0) {
         mStates.value = LoadingState
+
+        val page = currentCount / PAGE_SIZE + 1
+
         launch {
-            gitHubService.trendingRepos("android")
+            gitHubService.trendingRepos(page = page, perPage = PAGE_SIZE)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onReposFetched, this::onError)
@@ -36,4 +44,8 @@ class ListViewModel(private val gitHubService: GitHubService) : RxViewModel() {
     }
 
     data class RepoListState(val repositoriesResponse: RepositoriesResponse) : State()
+
+    companion object {
+        private const val PAGE_SIZE: Int = 30
+    }
 }

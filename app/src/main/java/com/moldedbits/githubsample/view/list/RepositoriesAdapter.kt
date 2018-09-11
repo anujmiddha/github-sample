@@ -8,19 +8,11 @@ import android.widget.TextView
 import com.moldedbits.githubsample.R
 import com.moldedbits.githubsample.model.Repository
 
-class RepositoriesAdapter : RecyclerView.Adapter<RepositoryViewHolder>() {
+class RepositoriesAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     private val items: MutableList<Repository> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_repository, parent, false)
-        return RepositoryViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    private var showLoading: Boolean = false
 
     fun addAll(repos: List<Repository>) {
         items.addAll(repos)
@@ -30,12 +22,59 @@ class RepositoriesAdapter : RecyclerView.Adapter<RepositoryViewHolder>() {
         items.clear()
     }
 
-    override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
-        holder.bind(items[position])
+    fun showLoading() {
+        showLoading = true
+        notifyItemInserted(items.size)
+    }
+
+    fun hideLoading() {
+        showLoading = false
+        notifyItemRemoved(items.size)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_REPO -> {
+                val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.list_item_repository, parent, false)
+                RepositoryViewHolder(view)
+            }
+            else -> {
+                val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.list_item_loading, parent, false)
+                LoadingViewHolder(view)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return items.size +
+                (if (showLoading) 1 else 0) // Add 1 if we are showing loading indicator
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (showLoading && position == items.size) {
+            return VIEW_TYPE_LOADING
+        }
+
+        return VIEW_TYPE_REPO
+    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        when (getItemViewType(position)) {
+            VIEW_TYPE_REPO -> (holder as RepositoryViewHolder).bind(items[position])
+        }
+    }
+
+    companion object {
+        private const val VIEW_TYPE_REPO = 0
+        private const val VIEW_TYPE_LOADING = 1
     }
 }
 
-class RepositoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+class RepositoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     private val nameView: TextView = itemView.findViewById(R.id.nameView)
 
@@ -43,3 +82,5 @@ class RepositoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameView.text = repository.name
     }
 }
+
+class LoadingViewHolder(itemView: View) : BaseViewHolder(itemView)
