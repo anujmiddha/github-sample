@@ -16,4 +16,14 @@
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 
+    <style name="GHSample.Description">
+        <item name="android:textSize">@dimen/textDescription</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="GHSample.Attributes">
+        <item name="android:textSize">@dimen/textDescription</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
 </resources>

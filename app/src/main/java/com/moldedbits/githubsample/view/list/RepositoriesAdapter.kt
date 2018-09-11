@@ -77,9 +77,15 @@ abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 class RepositoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     private val nameView: TextView = itemView.findViewById(R.id.nameView)
+    private val descriptionView: TextView = itemView.findViewById(R.id.descriptionView)
+    private val watchersView: TextView = itemView.findViewById(R.id.watchersView)
+    private val stargazersView: TextView = itemView.findViewById(R.id.stargazersView)
 
     fun bind(repository: Repository) {
         nameView.text = repository.name
+        descriptionView.text = repository.description
+        watchersView.text = repository.watchersCount.toString()
+        stargazersView.text = repository.stargazersCount.toString()
     }
 }
 
