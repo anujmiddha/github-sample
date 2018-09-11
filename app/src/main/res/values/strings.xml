@@ -6,4 +6,5 @@
     <string name="last_push">Last Push:</string>
     <string name="organization">Organization</string>
     <string name="license">License</string>
+    <string name="details_error">Could not fetch details</string>
 </resources>

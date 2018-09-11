@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.moldedbits.githubsample.R
 import com.moldedbits.githubsample.util.GlideApp
 import com.moldedbits.githubsample.view.ErrorState
@@ -40,8 +41,8 @@ class RepositoryDetailActivity : AppCompatActivity() {
                 fullNameView.text = it.repository.fullName
                 ownerView.text = it.repository.owner.login
                 descriptionView.text = it.repository.description
-                it.repository.pushedAt?.let {
-                    lastUpdatedView.text = dateFormat.format(it)
+                it.repository.pushedAt?.let { date ->
+                    lastUpdatedView.text = dateFormat.format(date)
                 }
 
                 watchersView.text = it.repository.watchersCount.toString()
@@ -79,7 +80,8 @@ class RepositoryDetailActivity : AppCompatActivity() {
                 }
             }
             is ErrorState -> {
-                // Show error
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, R.string.details_error, Toast.LENGTH_LONG).show()
             }
         }
     }
