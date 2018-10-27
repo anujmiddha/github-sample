@@ -5,13 +5,16 @@ import android.arch.lifecycle.MutableLiveData
 import com.moldedbits.githubsample.api.GitHubService
 import com.moldedbits.githubsample.model.RepositoriesResponse
 import com.moldedbits.githubsample.util.RxViewModel
+import com.moldedbits.githubsample.util.SchedulerProvider
+import com.moldedbits.githubsample.util.ext.with
 import com.moldedbits.githubsample.view.ErrorState
 import com.moldedbits.githubsample.view.LoadingState
 import com.moldedbits.githubsample.view.State
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ListViewModel(private val gitHubService: GitHubService) : RxViewModel() {
+class ListViewModel(private val gitHubService: GitHubService,
+                    private val scheduler: SchedulerProvider) : RxViewModel() {
 
     private val mStates = MutableLiveData<State>()
     val states: LiveData<State>
@@ -29,8 +32,7 @@ class ListViewModel(private val gitHubService: GitHubService) : RxViewModel() {
 
         launch {
             gitHubService.trendingRepos(page = page, perPage = PAGE_SIZE)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .with(scheduler)
                     .subscribe(this::onReposFetched, this::onError)
         }
     }

@@ -3,6 +3,8 @@ package com.moldedbits.githubsample.di
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.moldedbits.githubsample.api.GitHubService
+import com.moldedbits.githubsample.util.ApplicationSchedulerProvider
+import com.moldedbits.githubsample.util.SchedulerProvider
 import com.moldedbits.githubsample.view.detail.DetailViewModel
 import com.moldedbits.githubsample.view.list.ListViewModel
 import okhttp3.OkHttpClient
@@ -35,7 +37,14 @@ val appModule = module {
         retrofit.create<GitHubService>(GitHubService::class.java)
     }
 
-    viewModel { ListViewModel(get()) }
+    viewModel { ListViewModel(get(), get()) }
 
     viewModel { DetailViewModel(get()) }
 }
+
+val rxModule = module {
+
+    single { ApplicationSchedulerProvider() as SchedulerProvider }
+}
+
+val githubApp = listOf(appModule, rxModule)
