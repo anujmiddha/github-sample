@@ -1,6 +1,7 @@
 package com.moldedbits.githubsample.di
 
 import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.moldedbits.githubsample.api.GitHubService
 import com.moldedbits.githubsample.util.ApplicationSchedulerProvider
@@ -22,16 +23,11 @@ val appModule = module {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'hh:mm:ssZ")
-                .create()
-
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(get()))
                 .build()
 
         retrofit.create<GitHubService>(GitHubService::class.java)
@@ -39,7 +35,13 @@ val appModule = module {
 
     viewModel { ListViewModel(get(), get()) }
 
-    viewModel { DetailViewModel(get()) }
+    viewModel { DetailViewModel(get(), get()) }
+
+    single<Gson> { GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .setDateFormat("yyyy-MM-dd'T'hh:mm:ssZ")
+            .create()
+    }
 }
 
 val rxModule = module {

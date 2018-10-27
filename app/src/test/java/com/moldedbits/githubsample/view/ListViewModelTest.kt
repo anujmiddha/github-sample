@@ -1,4 +1,4 @@
-package com.moldedbits.githubsample
+package com.moldedbits.githubsample.view
 
 import android.arch.lifecycle.Observer
 import com.moldedbits.githubsample.api.GitHubService
@@ -23,8 +23,8 @@ import org.junit.Rule
 
 class ListViewModelTest : KoinTest {
 
-    val viewModel: ListViewModel by inject()
-    val service by inject<GitHubService>()
+    private val viewModel: ListViewModel by inject()
+    private val service by inject<GitHubService>()
 
     @Mock
     lateinit var uiData: Observer<State>
