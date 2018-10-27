@@ -9,8 +9,6 @@ import com.moldedbits.githubsample.util.SchedulerProvider
 import com.moldedbits.githubsample.util.ext.with
 import com.moldedbits.githubsample.view.ErrorState
 import com.moldedbits.githubsample.view.State
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class DetailViewModel(private val gitHubService: GitHubService,
                       private val scheduler: SchedulerProvider) : RxViewModel() {
